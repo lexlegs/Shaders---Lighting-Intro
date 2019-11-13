@@ -49,7 +49,7 @@ Shader "Custom/My First Lighting Shader"
 			float4 MyFragmentProgram(Interpolators i) : SV_TARGET
 			{
 				i.normal = normalize(i.normal);
-				return saturate(dot(float3(0, 1, 0), i.normal));
+				return DotClamped(float3(0, 1, 0), i.normal);
 			}
 
 			ENDCG
