@@ -53,7 +53,7 @@ Shader "Custom/My First Lighting Shader"
 			float4 MyFragmentProgram(Interpolators i) : SV_TARGET
 			{
 				i.normal = normalize(i.normal);
-				float3 lightDir = WorldSpaceLightPos0.xyz;
+				float3 lightDir = _WorldSpaceLightPos0.xyz;
 				return DotClamped(lightDir, i.normal);
 			}
 
