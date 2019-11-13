@@ -64,7 +64,7 @@ Shader "Custom/My First Lighting Shader"
 				float3 diffuse = albedo * lightColor * DotClamped(lightDir, i.normal);
 				float3 reflectionDir = reflect(-lightDir, i.normal);
 
-				return float4(reflectionDir * 0.5 + 0.5, 1);
+				return DotClamped(viewDir, reflectionDir);
 			}
 
 			ENDCG
