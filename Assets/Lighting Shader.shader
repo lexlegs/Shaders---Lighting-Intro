@@ -1,6 +1,5 @@
 ﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
-
 Shader "Custom/My First Lighting Shader"
 {
     Properties
@@ -18,6 +17,7 @@ Shader "Custom/My First Lighting Shader"
 			#pragma vertex MyVertexProgram
 			#pragma fragment MyFragmentProgram
 			#include "UnityCG.cginc"
+			#include "UnityStandardBRDF.cginc"
 
 			float4 _Tint;
 			sampler2D _MainTex;
@@ -49,7 +49,7 @@ Shader "Custom/My First Lighting Shader"
 			float4 MyFragmentProgram(Interpolators i) : SV_TARGET
 			{
 				i.normal = normalize(i.normal);
-				return max(0, dot(float3(0, 1, 0), i.normal));
+				return saturate(dot(float3(0, 1, 0), i.normal));
 			}
 
 			ENDCG
