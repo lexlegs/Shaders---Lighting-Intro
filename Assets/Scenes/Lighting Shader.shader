@@ -54,7 +54,10 @@ Shader "Custom/My First Lighting Shader"
 			{
 				i.normal = normalize(i.normal);
 				float3 lightDir = _WorldSpaceLightPos0.xyz;
-				return DotClamped(lightDir, i.normal);
+				float3 lightColor = _LightColor0.rgb;
+				float3 albedo = tex2D(_MainTex, i.uv).rgb * _Tint.rgb;
+				float3 diffuse = albedo * lightColor * DotClamped(lightDir, i.normal);
+				return float4(diffuse, 1);
 			}
 
 			ENDCG
