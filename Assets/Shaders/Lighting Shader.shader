@@ -7,6 +7,7 @@ Shader "Custom/My First Lighting Shader"
     {
         _Tint("Tint", Color) = (1, 1, 1, 1)
 		_MainTex("Texture", 2D) = "white" {}
+		_SpecularTint("Specular", Color) = (0.5, 0.5, 0.5)
 		_Smoothness ("Smoothness", Range(0, 1)) = 0.5
     }
 
@@ -29,6 +30,7 @@ Shader "Custom/My First Lighting Shader"
 			float4 _Tint;
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
+			float4 _SpecularTint;
 			float _Smoothness;
 
 			struct Interpolators
@@ -67,12 +69,9 @@ Shader "Custom/My First Lighting Shader"
 				float3 diffuse = albedo * lightColor * DotClamped(lightDir, i.normal);
 				float3 reflectionDir = reflect(-lightDir, i.normal);
 				float3 halfVector = normalize(lightDir + viewDir);
-				//float3 specular = lightColor * pow(DotClamped(viewDir, reflectionDir), _Smoothness * 100);
+				float3 specular = _SpecularTint.rgb * lightColor * pow(DotClamped(halfVector, i.normal), _Smoothness * 100);
 
-				return pow(
-					DotClamped(viewDir, reflectionDir),
-					_Smoothness * 100
-				);
+				return float4(specular, 1);
 			}
 
 			ENDCG
